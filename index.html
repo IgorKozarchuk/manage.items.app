@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>testUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    
+    <ul id="navbar">
+      <li><a href="#">Main</a></li>
+      <li><a class="active" href="#items">Overview</a></li>
+    </ul>
+    
+    <div id="content" ng-app="myTestUI" ng-cloak ng-controller="myCtrl">
+      
+      <div id="items" class="pannel">
+        <h1>Items</h1>
+        
+        <form id="input-form" action="#">
+          <input class="item-input" placeholder="Type name here..." ng-model="addMe">
+          <button class="add-btn" ng-click="addItem()">Add new</button>
+        </form>
+        
+        <ul id="items-list">
+          <li ng-repeat="x in items track by $index" ng-class="{activeLink: isActive(x)}"> <!-- track by $index - to allow adding similar items -->
+            <p class="item-name" ng-click="makeActive($index); select(x)" ng-init="select(x)">{{x.name}} <span class="badge">{{x.comment.length}}</span></p>
+            <button class="delete-btn" ng-click="removeItem($index)">Delete</button>
+            <div style="clear:both"></div>
+          </li>
+        </ul>
+        
+      </div>
+      <!-- END items -->
+      
+      <div id="comments" class="pannel">
+        <h1>Comments #<span id="comment-num">{{activeItem+1}}</span></h1>
+        
+        <ul id="comment-list">
+          <li ng-repeat="y in items[activeItem].comment track by $index"> <!-- track by $index - to allow adding similar items -->
+            <img class="avatar" src="images/ava-blue.png">
+            <p class="posted-comment">{{y}}</p>
+          </li>
+        </ul>
+        
+        <form id="comment-form" action="#">
+          <img class="avatar" src="images/ava-grey.png">
+          <textarea ng-model="txtcomment" ng-keypress="postCommentEnter($event)"></textarea>
+        </form>
+        
+      </div>
+      <!-- END comments -->
+      
+    </div>
+    <!-- END content -->
+    
+    <script src="script.js"></script>
+    
+  </body>
+</html>
