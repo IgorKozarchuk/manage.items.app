@@ -10,8 +10,6 @@ app.controller("myCtrl", function($scope) {
 	$scope.items = (localStorage.getItem("items") !== null) ? JSON.parse($scope.saved) : $scope.items;
 	localStorage.setItem("items", JSON.stringify($scope.items));
     
-    
-    
     $scope.activeItem = $scope.items.length - 1;
     
     $scope.addItem = function() {
