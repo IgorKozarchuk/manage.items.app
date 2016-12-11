@@ -1,10 +1,16 @@
 var app = angular.module("myTestUI", []);
 
-app.controller("myCtrl", function($scope, $window) {
+app.controller("myCtrl", function($scope) {
     $scope.items = [
         { name: "Hello", comment: ["Hello! Some text..."] },
         { name: "World", comment: ["World! Some text...", "World! Some more text..."] }
     ];
+    
+    $scope.saved = localStorage.getItem("items");
+	$scope.items = (localStorage.getItem("items") !== null) ? JSON.parse($scope.saved) : $scope.items;
+	localStorage.setItem("items", JSON.stringify($scope.items));
+    
+    
     
     $scope.activeItem = $scope.items.length - 1;
     
@@ -15,11 +21,13 @@ app.controller("myCtrl", function($scope, $window) {
         );
         $scope.addMe = ""; // clear input after push
         $scope.activeItem = $scope.items.length - 1;
+        localStorage.setItem("items", JSON.stringify($scope.items));
     };
     
     $scope.removeItem = function(x) {
         $scope.items.splice(x, 1);
         $scope.select($scope.items[$scope.items.length-1]);
+        localStorage.setItem("items", JSON.stringify($scope.items));
     };
     
     $scope.select = function(item) {
@@ -40,7 +48,6 @@ app.controller("myCtrl", function($scope, $window) {
             $scope.txtcomment = "";
             e.preventDefault(); // returns cursor to 1st line
         }
-    };    
-    
-    $window.localStorage.setItem("items", JSON.stringify($scope.items));    
+        localStorage.setItem("items", JSON.stringify($scope.items));
+    };
 });
