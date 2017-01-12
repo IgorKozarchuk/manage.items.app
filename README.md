@@ -1,1 +1,2 @@
-# testUI.github.io
+AngularJS App
+for adding, commenting and deleting items
